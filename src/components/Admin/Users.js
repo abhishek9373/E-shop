@@ -3,19 +3,21 @@ import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
 import Usercard from "./Usercard";
 
-function Users() {
+function Users(props) {
   const [allusers, setallusers] = useState([]);
 
   useEffect( () => {
-    axios.post("http://localhost:5000/getusers", {}).then((e) => {
+    axios.post("http://localhost:5000/getusers", {token:localStorage.getItem('authtoken')}).then((e) => {
       if (e.data) {
         console.log(e.data);
         setallusers(e.data);
       } else {
         console.log("no users false");
       }
-    });
-  }, []);
+    }).catch((e)=>{
+      console.log(e)
+    })
+  },[]);
 
   return (
     <div>
